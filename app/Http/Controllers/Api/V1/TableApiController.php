@@ -9,6 +9,8 @@ use App\Models\TableReservation;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Api\TableResource;
+use App\Http\Resources\Api\ReserveTableResource;
 
 class TableApiController extends BaseApiController
 {
@@ -17,7 +19,7 @@ class TableApiController extends BaseApiController
         try {
             $tables = Table::query()->with('reservation')->get();
 
-            return $this->sendResponse($tables, 'All table list');
+            return $this->sendResponse(TableResource::collection($tables), 'Table fetched successfully!');
         } catch (Exception $e) {
             return $this->sendError('Something went wrong');
         }
@@ -77,7 +79,7 @@ class TableApiController extends BaseApiController
         try {
             $tables = Table::where('status', 0)->with('reservation')->get();
 
-            return $this->sendResponse($tables, 'All table list');
+            return $this->sendResponse(TableResource::collection($tables), 'Table fetched successfully!');
         } catch (Exception $e) {
 
             return $this->sendError('Something went wrong');
@@ -85,16 +87,23 @@ class TableApiController extends BaseApiController
     }
 
     public function getMyReservedTables()
-    {
-        try {
-            $reserved_tables = auth('api')->user()->tableReservation->where('is_complete', 0);
+{
+    try {
+        
+        $reserved_tables = auth('api')->user()->tableReservation()->where('is_complete', 0)->get();
 
-            $reserved_tables = $reserved_tables->fresh(['user', 'table']);
+       
+        $reserved_tables->load('user', 'table');
 
-            return $this->sendResponse($reserved_tables, 'All reserved table list');
-        } catch (Exception $e) {
+        
+        $reserved_tables_resource = ReserveTableResource::collection($reserved_tables);
 
-            return $this->sendError('Something went wrong');
-        }
+        return $this->sendResponse($reserved_tables_resource, 'Reserved tables fetched successfully!');
+    } catch (Exception $e) {
+      dd($e->getMessage());
+        \Log::error('Error fetching reserved tables: ' . $e->getMessage());
+        
+        return $this->sendError('Something went wrong.');
     }
+}
 }
