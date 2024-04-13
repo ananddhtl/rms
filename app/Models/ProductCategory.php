@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCategory extends Model
 {
     use HasFactory;
-
+    protected $guarded = ['id'];
     protected $fillable = ['name', 'image_id'];
 
     public function image()
