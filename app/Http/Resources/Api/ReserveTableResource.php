@@ -20,8 +20,8 @@ class ReserveTableResource extends JsonResource
             'table_id' =>(int)$this->table_id,
             'date' => $this->date,
             'time' => $this->time,
-            'guest_count' => $this->guest_count,
-            'is_complete' => $this->is_complete,
+            'guest_count' => (int)$this->guest_count,
+            'is_complete' =>(int)$this->is_complete,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => $this->whenLoaded('user', function () {

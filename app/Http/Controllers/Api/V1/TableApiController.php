@@ -47,6 +47,7 @@ class TableApiController extends BaseApiController
             DB::commit();
             return $this->sendResponse($table_reservation, 'Reserved Successfully.');
         } catch (Exception $e) {
+            dd($e->getMessage());
             DB::rollBack();
             return $this->sendError('Something went wrong');
         }
