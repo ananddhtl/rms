@@ -16,8 +16,8 @@ class ReserveTableResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'table_id' => $this->table_id,
+            'user_id' =>(int)$this->user_id,
+            'table_id' =>(int)$this->table_id,
             'date' => $this->date,
             'time' => $this->time,
             'guest_count' => $this->guest_count,

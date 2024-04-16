@@ -89,15 +89,9 @@ class TableApiController extends BaseApiController
     public function getMyReservedTables()
 {
     try {
-        
         $reserved_tables = auth('api')->user()->tableReservation()->where('is_complete', 0)->get();
-
-       
         $reserved_tables->load('user', 'table');
-
-        
         $reserved_tables_resource = ReserveTableResource::collection($reserved_tables);
-
         return $this->sendResponse($reserved_tables_resource, 'Reserved tables fetched successfully!');
     } catch (Exception $e) {
       dd($e->getMessage());
