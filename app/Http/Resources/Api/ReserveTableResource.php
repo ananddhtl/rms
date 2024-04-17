@@ -28,7 +28,7 @@ class ReserveTableResource extends JsonResource
                 return $this->user;
             }),
             'table' => $this->whenLoaded('table', function () {
-                return $this->table;
+                return new TableResource($this->table);
             }),
         ];
     }

@@ -22,7 +22,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
     Route::resource('files', FileController::class);
     Route::resource('users', UserController::class);
