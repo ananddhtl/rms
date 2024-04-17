@@ -16,8 +16,22 @@ class MenuProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'price' => $this->price,
-            'description' => $this->description
+            'description' => $this->description,
+            'category_id' => (int)$this->category_id,
+             'image_id' => (int)$this->image_id, 
+            'image' => $this->whenLoaded('image', function () {
+                return $this->image;
+            }),
+           
+            'category' => $this->whenLoaded('category', function () {
+                return $this->category;
+            }),
+          
+            'category_image' => $this->whenLoaded('category.image', function () {
+                return $this->category->image;
+            }),
         ];
     }
 }

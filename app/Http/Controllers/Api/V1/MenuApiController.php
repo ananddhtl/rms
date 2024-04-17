@@ -15,7 +15,7 @@ class MenuApiController extends BaseApiController
     {
         try {
             $categories = ProductCategory::query()->with('products')->with('image')->with('products.image')->get();
-            return $this->sendResponse($categories, 'Menu List');
+            return $this->sendResponse(MenuResource::collection($categories), 'Menu fetched successfully!');
         } catch (Exception $e) {
             return $this->sendError('Something went wrong');
         }
