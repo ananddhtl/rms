@@ -40,7 +40,7 @@ class OrderController extends BaseApiController
                 'ordered_at' => now()
             ]);
 
-            return $this->sendResponse($order, 'Ordered successfully');
+            return $this->sendResponse(OrderResource::collection($orders), "User's all orders");
         } catch (Exception $e) {
             return $this->sendError('Something went wrong');
         }

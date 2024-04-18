@@ -12,6 +12,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Api\OrderResource;
 
 class OrderApiController extends BaseApiController
 {
@@ -72,7 +73,7 @@ class OrderApiController extends BaseApiController
         try {
             $orders = Order::where('user_id', auth('api')->user()->id)->with('items', 'table', 'items.product', 'items.product.image')->latest()->get();
 
-            return $this->sendResponse($orders, "User's all orders");
+            return $this->sendResponse(OrderResource::collection($orders), "User's all orders");
         } catch (Exception $e) {
             return $this->sendError('Something went wrong');
         }
@@ -83,7 +84,7 @@ class OrderApiController extends BaseApiController
         try {
             $order = Order::where('id', $request->id)->with('items', 'table', 'items.product', 'items.product.image')->first();
             if ($order) {
-                return $this->sendResponse($order, 'Order Details');
+                return $this->sendResponse(new OrderResource($order), "Order details");
             } else {
                 return $this->sendError('Order not found.');
             }
