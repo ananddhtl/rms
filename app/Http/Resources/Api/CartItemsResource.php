@@ -16,9 +16,9 @@ class CartItemsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'cart_id' => $this->cart_id,
-            'product_id' => $this->product_id,
-            'quantity' => $this->quantity,
+            'cart_id' =>  (int)$this->cart_id,
+            'product_id' => (int) $this->product_id,
+            'quantity' => (int) $this->quantity,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'product' => new ProductResource($this->product), // Assuming you also have a ProductResource
