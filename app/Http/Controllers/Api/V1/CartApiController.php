@@ -10,6 +10,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Api\CartResource;
 
 class CartApiController extends BaseApiController
 {
@@ -22,7 +23,7 @@ class CartApiController extends BaseApiController
         } catch (Exception $e) {
             return $this->sendError('Something went wrong');
         }
-    }
+    } 
 
     public function addToCart(Request $request)
     {

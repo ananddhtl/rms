@@ -17,7 +17,7 @@ class MenuResource extends JsonResource
         return [
             'id' => $this->id,
             'category_name' => $this->name,
-            'products' => MenuProductResource::collection($this->products)
+            'products_id' => MenuProductResource::collection($this->products)
         ];
     }
 }
